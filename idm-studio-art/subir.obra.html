@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Obra | IDM Studio Art</title>
+    <style>
+        :root {
+            --primary-color: #FDBFD3;
+            --secondary-color: #FFCFE2;
+            --accent-color: #FDC9DA;
+            --dark-color: #5A4A5A;
+            --light-color: #FDEEF5;
+            --background-color: #E9EDF6;
+            --gray-color: #8A7A8A;
+            --success-color: #88C9A1;
+            --warning-color: #E8B96D;
+            --danger-color: #E88D8D;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--dark-color);
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--light-color);
+            color: var(--dark-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--secondary-color);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 30px 0;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+        
+        .page-subtitle {
+            color: var(--gray-color);
+            font-size: 1.1rem;
+        }
+        
+        /* Upload Form */
+        .upload-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            .upload-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .upload-area {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .form-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-color);
+        }
+        
+        /* Upload Box */
+        .upload-box {
+            border: 2px dashed var(--secondary-color);
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 20px;
+            background: var(--light-color);
+        }
+        
+        .upload-box:hover {
+            border-color: var(--primary-color);
+            background: rgba(253, 191, 211, 0.1);
+        }
+        
+        .upload-box.dragover {
+            border-color: var(--primary-color);
+            background: rgba(253, 191, 211, 0.2);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--gray-color);
+            margin-bottom: 15px;
+        }
+        
+        .upload-text {
+            margin-bottom: 15px;
+        }
+        
+        .upload-text h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .upload-text p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .preview-container {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .preview-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--light-color);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(253, 191, 211, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-text {
+            font-size: 0.85rem;
+            color: var(--gray-color);
+            margin-top: 5px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (max-width: 576px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Tags Input */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .tag {
+            background: rgba(253, 191, 211, 0.2);
+            color: var(--dark-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid var(--primary-color);
+        }
+        
+        .tag-remove {
+            background: none;
+            border: none;
+            color: var(--dark-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tag-remove:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Advanced Options */
+        .advanced-options {
+            margin-top: 30px;
+            border-top: 1px solid var(--light-color);
+            padding-top: 20px;
+        }
+        
+        .toggle-advanced {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .advanced-content {
+            display: none;
+        }
+        
+        .advanced-content.show {
+            display: block;
+        }
+        
+        /* Visibility Options */
+        .visibility-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .visibility-option {
+            flex: 1;
+        }
+        
+        .visibility-input {
+            display: none;
+        }
+        
+        .visibility-label {
+            display: block;
+            padding: 15px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: var(--light-color);
+        }
+        
+        .visibility-input:checked + .visibility-label {
+            border-color: var(--primary-color);
+            background: rgba(253, 191, 211, 0.2);
+        }
+        
+        .visibility-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: block;
+            color: var(--dark-color);
+        }
+        
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-color);
+        }
+        
+        /* Requirements */
+        .requirements {
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .requirements-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .requirements-list {
+            list-style: none;
+        }
+        
+        .requirements-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray-color);
+        }
+        
+        .requirements-list i {
+            color: var(--success-color);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Loading State */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--light-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: var(--success-color);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* Progress Bar */
+        .progress-bar {
+            height: 6px;
+            background: var(--light-color);
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+            border: 1px solid var(--secondary-color);
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        /* Checkbox Styles */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 0;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">IDM Studio Art</a>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="explore.html">Explorar</a></li>
+                    <li><a href="gallery.html">Galería</a></li>
+                    <li><a href="artists.html">Artistas</a></li>
+                </ul>
+                
+                <div class="user-actions">
+                    <a href="mi.perfil.html" class="btn btn-outline">Mi Perfil</a>
+                    <a href="dashboard.html" class="btn btn-primary">Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">Subir Nueva Obra</h1>
+                <p class="page-subtitle">Comparte tu creatividad con la comunidad de IDM Studio Art</p>
+            </div>
+            
+            <!-- Success Message -->
+            <div class="success-message" id="success-message">
+                <i class="fas fa-check-circle"></i> ¡Tu obra se ha publicado exitosamente en IDM Studio Art!
+            </div>
+            
+            <!-- Upload Form -->
+            <form id="upload-form" class="upload-container" enctype="multipart/form-data">
+                <!-- Left Column - Image Upload -->
+                <div class="upload-area">
+                    <h2 class="section-title">Subir Imagen</h2>
+                    
+                    <div class="upload-box" id="upload-box">
+                        <div class="upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <div class="upload-text">
+                            <h3>Arrastra tu imagen aquí</h3>
+                            <p>o haz clic para seleccionar un archivo</p>
+                        </div>
+                        <input type="file" id="image-file" class="file-input" accept="image/*">
+                        <button type="button" class="btn btn-primary" id="select-file-btn">Seleccionar Archivo</button>
+                    </div>
+                    
+                    <div class="progress-bar">
+                        <div class="progress" id="upload-progress"></div>
+                    </div>
+                    
+                    <div class="preview-container" id="preview-container">
+                        <img id="image-preview" class="image-preview" src="" alt="Vista previa">
+                        <div class="preview-actions">
+                            <button type="button" class="btn btn-secondary" id="change-image-btn">
+                                <i class="fas fa-sync"></i> Cambiar
+                            </button>
+                            <button type="button" class="btn btn-outline" id="remove-image-btn">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="requirements">
+                        <h4 class="requirements-title">Requisitos de la imagen - IDM Studio Art</h4>
+                        <ul class="requirements-list">
+                            <li><i class="fas fa-check"></i> Formatos: JPG, PNG, GIF, WEBP</li>
+                            <li><i class="fas fa-check"></i> Tamaño máximo: 10MB</li>
+                            <li><i class="fas fa-check"></i> Resolución recomendada: 1200px mínimo</li>
+                            <li><i class="fas fa-check"></i> Relación de aspecto: Cualquiera</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Form Details -->
+                <div class="form-section">
+                    <h2 class="section-title">Detalles de la Obra</h2>
+                    
+                    <div class="form-group">
+                        <label for="artwork-title" class="form-label">Título de la obra *</label>
+                        <input type="text" id="artwork-title" class="form-control" placeholder="Ej: Aurora Digital" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="artwork-description" class="form-label">Descripción</label>
+                        <textarea id="artwork-description" class="form-control" placeholder="Describe tu obra, inspiración, técnica utilizada..."></textarea>
+                        <div class="form-text">Máximo 500 caracteres</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="artwork-category" class="form-label">Categoría *</label>
+                            <select id="artwork-category" class="form-control" required>
+                                <option value="">Selecciona una categoría</option>
+                                <option value="digital-painting">Pintura Digital</option>
+                                <option value="photo-manipulation">Manipulación Fotográfica</option>
+                                <option value="3d-art">Arte 3D</option>
+                                <option value="vector-art">Arte Vectorial</option>
+                                <option value="concept-art">Arte Conceptual</option>
+                                <option value="illustration">Ilustración</option>
+                                <option value="abstract">Arte Abstracto</option>
+                                <option value="fantasy">Fantasía</option>
+                                <option value="sci-fi">Ciencia Ficción</option>
+                                <option value="other">Otro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="artwork-medium" class="form-label">Medio/Técnica</label>
+                            <input type="text" id="artwork-medium" class="form-control" placeholder="Ej: Photoshop, Blender, Procreate">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="artwork-tags" class="form-label">Etiquetas</label>
+                        <input type="text" id="artwork-tags" class="form-control" placeholder="Ej: abstracto, color, naturaleza, digital">
+                        <div class="form-text">Separa las etiquetas con comas. Máximo 10 etiquetas.</div>
+                        <div class="tags-container" id="tags-container"></div>
+                    </div>
+                    
+                    <!-- Advanced Options -->
+                    <div class="advanced-options">
+                        <button type="button" class="toggle-advanced" id="toggle-advanced">
+                            <i class="fas fa-cog"></i> Opciones avanzadas
+                            <i class="fas fa-chevron-down" id="advanced-arrow"></i>
+                        </button>
+                        
+                        <div class="advanced-content" id="advanced-content">
+                            <div class="form-group">
+                                <label class="form-label">Visibilidad en IDM Studio</label>
+                                <div class="visibility-options">
+                                    <div class="visibility-option">
+                                        <input type="radio" id="visibility-public" name="visibility" value="public" class="visibility-input" checked>
+                                        <label for="visibility-public" class="visibility-label">
+                                            <i class="fas fa-globe visibility-icon"></i>
+                                            <span>Pública</span>
+                                            <small style="display:block; margin-top:5px; color:var(--gray-color);">Visible para todos</small>
+                                        </label>
+                                    </div>
+                                    <div class="visibility-option">
+                                        <input type="radio" id="visibility-private" name="visibility" value="private" class="visibility-input">
+                                        <label for="visibility-private" class="visibility-label">
+                                            <i class="fas fa-lock visibility-icon"></i>
+                                            <span>Privada</span>
+                                            <small style="display:block; margin-top:5px; color:var(--gray-color);">Solo tú puedes verla</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="artwork-year" class="form-label">Año de creación</label>
+                                <input type="number" id="artwork-year" class="form-control" min="2000" max="2023" value="2023">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Permisos de uso en IDM Studio</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="allow-downloads">
+                                        <span>Permitir descargas</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="allow-sharing" checked>
+                                        <span>Permitir compartir</span>
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="commercial-use">
+                                        <span>Permitir uso comercial</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-btn">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submit-btn">
+                            <i class="fas fa-upload"></i> Publicar en IDM Studio
+                        </button>
+                    </div>
+                </div>
+            </form>
+            
+            <!-- Loading State -->
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Subiendo tu obra a IDM Studio Art, por favor espera...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>IDM Studio Art</h3>
+                    <p>La plataforma líder para artistas digitales y amantes del arte contemporáneo.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="explore.html">Explorar</a></li>
+                        <li><a href="gallery.html">Galería</a></li>
+                        <li><a href="artists.html">Artistas</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Recursos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Centro de ayuda</a></li>
+                        <li><a href="#">Términos de servicio</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Conecta</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-pinterest"></i> Pinterest</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 IDM Studio Art. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Elementos del DOM
+        const uploadForm = document.getElementById('upload-form');
+        const uploadBox = document.getElementById('upload-box');
+        const fileInput = document.getElementById('image-file');
+        const selectFileBtn = document.getElementById('select-file-btn');
+        const previewContainer = document.getElementById('preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const changeImageBtn = document.getElementById('change-image-btn');
+        const removeImageBtn = document.getElementById('remove-image-btn');
+        const tagsInput = document.getElementById('artwork-tags');
+        const tagsContainer = document.getElementById('tags-container');
+        const toggleAdvanced = document.getElementById('toggle-advanced');
+        const advancedContent = document.getElementById('advanced-content');
+        const advancedArrow = document.getElementById('advanced-arrow');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const loading = document.getElementById('loading');
+        const successMessage = document.getElementById('success-message');
+        const uploadProgress = document.getElementById('upload-progress');
+
+        // Variables
+        let tags = [];
+        let currentImageFile = null;
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+        });
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Upload box events
+            selectFileBtn.addEventListener('click', () => fileInput.click());
+            uploadBox.addEventListener('click', () => fileInput.click());
+            uploadBox.addEventListener('dragover', handleDragOver);
+            uploadBox.addEventListener('dragleave', handleDragLeave);
+            uploadBox.addEventListener('drop', handleDrop);
+            
+            // File input change
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Image actions
+            changeImageBtn.addEventListener('click', () => fileInput.click());
+            removeImageBtn.addEventListener('click', removeImage);
+            
+            // Tags input
+            tagsInput.addEventListener('keydown', handleTagInput);
+            tagsInput.addEventListener('blur', addTagFromInput);
+            
+            // Advanced options
+            toggleAdvanced.addEventListener('click', toggleAdvancedOptions);
+            
+            // Form actions
+            cancelBtn.addEventListener('click', cancelUpload);
+            uploadForm.addEventListener('submit', handleFormSubmit);
+        }
+
+        // Manejar arrastrar sobre
+        function handleDragOver(e) {
+            e.preventDefault();
+            uploadBox.classList.add('dragover');
+        }
+
+        // Manejar salir del área de arrastre
+        function handleDragLeave(e) {
+            e.preventDefault();
+            uploadBox.classList.remove('dragover');
+        }
+
+        // Manejar soltar archivo
+        function handleDrop(e) {
+            e.preventDefault();
+            uploadBox.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processFile(files[0]);
+            }
+        }
+
+        // Manejar selección de archivo
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                processFile(file);
+            }
+        }
+
+        // Procesar archivo
+        function processFile(file) {
+            // Validar tipo de archivo
+            if (!file.type.match('image.*')) {
+                alert('Por favor, selecciona solo archivos de imagen para IDM Studio Art.');
+                return;
+            }
+            
+            // Validar tamaño (10MB máximo)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('El archivo es demasiado grande. El tamaño máximo permitido en IDM Studio Art es 10MB.');
+                return;
+            }
+            
+            currentImageFile = file;
+            
+            // Mostrar vista previa
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                previewContainer.style.display = 'block';
+                uploadBox.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Remover imagen
+        function removeImage() {
+            currentImageFile = null;
+            fileInput.value = '';
+            previewContainer.style.display = 'none';
+            uploadBox.style.display = 'block';
+        }
+
+        // Manejar entrada de etiquetas
+        function handleTagInput(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addTagFromInput();
+            } else if (e.key === 'Backspace' && tagsInput.value === '' && tags.length > 0) {
+                removeTag(tags.length - 1);
+            }
+        }
+
+        // Añadir etiqueta desde input
+        function addTagFromInput() {
+            const tagText = tagsInput.value.trim();
+            if (tagText && tags.length < 10) {
+                addTag(tagText);
+                tagsInput.value = '';
+            }
+        }
+
+        // Añadir etiqueta
+        function addTag(text) {
+            if (tags.includes(text.toLowerCase())) return;
+            
+            tags.push(text.toLowerCase());
+            renderTags();
+        }
+
+        // Remover etiqueta
+        function removeTag(index) {
+            tags.splice(index, 1);
+            renderTags();
+        }
+
+        // Renderizar etiquetas
+        function renderTags() {
+            tagsContainer.innerHTML = '';
+            tags.forEach((tag, index) => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `
+                    ${tag}
+                    <button type="button" class="tag-remove" data-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                tagsContainer.appendChild(tagElement);
+            });
+            
+            // Agregar event listeners a los botones de eliminar
+            document.querySelectorAll('.tag-remove').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    removeTag(index);
+                });
+            });
+        }
+
+        // Alternar opciones avanzadas
+        function toggleAdvancedOptions() {
+            advancedContent.classList.toggle('show');
+            advancedArrow.classList.toggle('fa-chevron-down');
+            advancedArrow.classList.toggle('fa-chevron-up');
+        }
+
+        // Cancelar subida
+        function cancelUpload() {
+            if (confirm('¿Estás seguro de que quieres cancelar? Se perderán todos los datos no guardados en IDM Studio Art.')) {
+                window.location.href = 'dashboard.html';
+            }
+        }
+
+        // Manejar envío del formulario
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Validaciones
+            if (!currentImageFile) {
+                alert('Por favor, selecciona una imagen para subir a IDM Studio Art.');
+                return;
+            }
+            
+            if (!document.getElementById('artwork-title').value.trim()) {
+                alert('Por favor, ingresa un título para tu obra en IDM Studio Art.');
+                return;
+            }
+            
+            if (!document.getElementById('artwork-category').value) {
+                alert('Por favor, selecciona una categoría para tu obra en IDM Studio Art.');
+                return;
+            }
+            
+            // Mostrar loading
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+            
+            // Simular progreso de subida
+            simulateUploadProgress();
+            
+            // En una implementación real, aquí enviarías los datos al servidor
+            // Por ahora, simulamos una subida exitosa después de 2 segundos
+            setTimeout(() => {
+                loading.style.display = 'none';
+                successMessage.style.display = 'block';
+                submitBtn.disabled = false;
+                
+                // Redirigir después de 2 segundos
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+            }, 2000);
+        }
+
+        // Simular progreso de subida
+        function simulateUploadProgress() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+                uploadProgress.style.width = progress + '%';
+            }, 200);
+        }
+
+        // Simulación de conexión a PHP/MySQL
+        function submitToServer(formData) {
+            /*
+            fetch('api/upload_artwork.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showSuccess();
+                } else {
+                    showError(data.message);
+                }
+            })
+            .catch(error => {
+                showError('Error al conectar con IDM Studio Art');
+            });
+            */
+        }
+
+        // Crear FormData para enviar
+        function createFormData() {
+            const formData = new FormData();
+            formData.append('image', currentImageFile);
+            formData.append('title', document.getElementById('artwork-title').value);
+            formData.append('description', document.getElementById('artwork-description').value);
+            formData.append('category', document.getElementById('artwork-category').value);
+            formData.append('medium', document.getElementById('artwork-medium').value);
+            formData.append('tags', JSON.stringify(tags));
+            formData.append('visibility', document.querySelector('input[name="visibility"]:checked').value);
+            formData.append('year', document.getElementById('artwork-year').value);
+            formData.append('allow_downloads', document.getElementById('allow-downloads').checked ? '1' : '0');
+            formData.append('allow_sharing', document.getElementById('allow-sharing').checked ? '1' : '0');
+            formData.append('commercial_use', document.getElementById('commercial-use').checked ? '1' : '0');
+            
+            return formData;
+        }
+    </script>
+</body>
+</html>

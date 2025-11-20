@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistas - IDM Studio Art</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --color-primary: #FDEEF5;
+            --color-secondary: #FFCFE2;
+            --color-accent: #FDBFD3;
+            --color-light: #E9EDF6;
+            --color-dark: #FDC9DA;
+            --color-text: #444;
+            --color-text-light: #666;
+        }
+
+        body {
+            background-color: var(--color-primary);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(253, 191, 211, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: #FDBFD3;
+            font-size: 2rem;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, #FDBFD3, #FFCFE2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #FDBFD3;
+        }
+
+        .nav-links a.active {
+            color: #FDBFD3;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #FDBFD3;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #FDBFD3;
+            color: #FDBFD3;
+        }
+
+        .btn-filled {
+            background: #FDBFD3;
+            color: white;
+        }
+
+        .btn-large {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(253, 191, 211, 0.3);
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #444;
+            font-size: 2.4rem;
+            font-weight: 600;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #FDBFD3, #FFCFE2);
+            margin: 0.8rem auto;
+            border-radius: 2px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-light) 100%);
+            padding: 4rem 5%;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            color: #444;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Filters */
+        .filters {
+            padding: 2rem 5%;
+            background-color: white;
+            border-bottom: 1px solid rgba(253, 191, 211, 0.2);
+        }
+
+        .filter-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--color-primary);
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            width: 350px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 0.5rem;
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-select {
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            border: 2px solid var(--color-light);
+            background: white;
+            color: #555;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-select:hover {
+            border-color: var(--color-accent);
+        }
+
+        /* Artists Grid */
+        .artists-section {
+            padding: 4rem 5%;
+        }
+
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .artist-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s, box-shadow 0.4s;
+            border: 1px solid rgba(253, 191, 211, 0.2);
+        }
+
+        .artist-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .artist-header {
+            height: 120px;
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .artist-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: white;
+            position: absolute;
+            bottom: -40px;
+            border: 5px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-accent);
+            font-size: 2.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .artist-info {
+            padding: 3rem 1.8rem 1.8rem;
+            text-align: center;
+        }
+
+        .artist-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #444;
+        }
+
+        .artist-specialty {
+            color: var(--color-accent);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .artist-bio {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .artist-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(253, 191, 211, 0.2);
+            border-bottom: 1px solid rgba(253, 191, 211, 0.2);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-accent);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .artist-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Featured Artists */
+        .featured-artists {
+            padding: 5rem 5%;
+            background-color: var(--color-light);
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .featured-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            display: flex;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .featured-image {
+            width: 120px;
+            background: linear-gradient(135deg, var(--color-light) 0%, var(--color-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .featured-content {
+            padding: 1.5rem;
+            flex: 1;
+        }
+
+        .featured-badge {
+            background: var(--color-accent);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+
+        .page-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 2px solid var(--color-light);
+            color: #555;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn.active {
+            background: var(--color-accent);
+            border-color: var(--color-accent);
+            color: white;
+        }
+
+        .page-btn:hover:not(.active) {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            color: white;
+            padding: 5rem 5% 2.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.8rem;
+            font-size: 1.3rem;
+            color: #FDBFD3;
+        }
+
+        .footer-column p {
+            color: #ccc;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-column a i {
+            width: 20px;
+        }
+
+        .footer-column a:hover {
+            color: var(--color-secondary);
+            transform: translateX(5px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.8rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: #444;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        /* Modales */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 18px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-text-light);
+        }
+
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--color-text);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--color-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .modal-switch {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--color-text-light);
+        }
+
+        .modal-switch a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Mensajes */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        .message.error {
+            background: #f44336;
+        }
+
+        .message button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 1.2rem 5%;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .artists-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .featured-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-card {
+                flex-direction: column;
+            }
+
+            .featured-image {
+                width: 100%;
+                height: 120px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Actualizado -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-palette"></i>
+                <span class="logo-text">IDM Studio Art</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> Inicio</a>
+                <a href="#explorar"><i class="fas fa-compass"></i> Explorar</a>
+                <a href="artistas.html" class="active"><i class="fas fa-users"></i> Artistas</a>
+                <a href="espectador.html"><i class="fas fa-user"></i> Mi Espacio</a>
+            </div>
+            <div class="auth-buttons">
+                <!-- Se llena automáticamente con auth.js -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Nuestros Artistas</h1>
+        <p>Descubre el talento excepcional de nuestra comunidad de artistas digitales</p>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+        <div class="filter-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar artistas...">
+            </div>
+            <div class="filter-options">
+                <select class="filter-select">
+                    <option>Todas las especialidades</option>
+                    <option>Ilustración Digital</option>
+                    <option>Fotografía Artística</option>
+                    <option>Arte 3D</option>
+                    <option>Dibujo Digital</option>
+                    <option>Concept Art</option>
+                </select>
+                <select class="filter-select">
+                    <option>Ordenar por: Popularidad</option>
+                    <option>Ordenar por: Más recientes</option>
+                    <option>Ordenar por: Alfabético</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Artists Grid -->
+    <section class="artists-section">
+        <h2 class="section-title">Artistas Destacados</h2>
+        <div class="artists-grid">
+            <!-- Artist 1 -->
+            <div class="artist-card">
+                <div class="artist-header">
+                    <div class="artist-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="artist-info">
+                    <h3 class="artist-name">Elena Rodríguez</h3>
+                    <p class="artist-specialty">Ilustradora Digital</p>
+                    <p class="artist-bio">Especializada en arte fantasy y personajes. Con más de 5 años de experiencia en la industria.</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-number">142</div>
+                            <div class="stat-label">Obras</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">3.2K</div>
+                            <div class="stat-label">Seguidores</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">4.9</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                    <div class="artist-actions">
+                        <button class="btn btn-filled btn-small"><i class="fas fa-eye"></i> Ver Perfil</button>
+                        <button class="btn btn-outline btn-small"><i class="fas fa-plus"></i> Seguir</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 2 -->
+            <div class="artist-card">
+                <div class="artist-header">
+                    <div class="artist-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="artist-info">
+                    <h3 class="artist-name">Carlos Mendoza</h3>
+                    <p class="artist-specialty">Artista 3D</p>
+                    <p class="artist-bio">Creando mundos virtuales y personajes 3D para videojuegos y cine.</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-number">87</div>
+                            <div class="stat-label">Obras</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">2.1K</div>
+                            <div class="stat-label">Seguidores</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">4.8</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                    <div class="artist-actions">
+                        <button class="btn btn-filled btn-small"><i class="fas fa-eye"></i> Ver Perfil</button>
+                        <button class="btn btn-outline btn-small"><i class="fas fa-plus"></i> Seguir</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 3 -->
+            <div class="artist-card">
+                <div class="artist-header">
+                    <div class="artist-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="artist-info">
+                    <h3 class="artist-name">Sofia Chen</h3>
+                    <p class="artist-specialty">Concept Artist</p>
+                    <p class="artist-bio">Diseñando conceptos para películas y videojuegos AAA. Apasionada por la narrativa visual.</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-number">203</div>
+                            <div class="stat-label">Obras</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">4.5K</div>
+                            <div class="stat-label">Seguidores</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">5.0</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                    <div class="artist-actions">
+                        <button class="btn btn-filled btn-small"><i class="fas fa-eye"></i> Ver Perfil</button>
+                        <button class="btn btn-outline btn-small"><i class="fas fa-plus"></i> Seguir</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 4 -->
+            <div class="artist-card">
+                <div class="artist-header">
+                    <div class="artist-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="artist-info">
+                    <h3 class="artist-name">Alex Rivera</h3>
+                    <p class="artist-specialty">Fotógrafo Artístico</p>
+                    <p class="artist-bio">Capturando momentos únicos y transformándolos en arte digital mediante edición creativa.</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">Obras</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">3.8K</div>
+                            <div class="stat-label">Seguidores</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">4.7</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                    <div class="artist-actions">
+                        <button class="btn btn-filled btn-small"><i class="fas fa-eye"></i> Ver Perfil</button>
+                        <button class="btn btn-outline btn-small"><i class="fas fa-plus"></i> Seguir</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 5 -->
+            <div class="artist-card">
+                <div class="artist-header">
+                    <div class="artist-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="artist-info">
+                    <h3 class="artist-name">David Kim</h3>
+                    <p class="artist-specialty">Ilustrador Vectorial</p>
+                    <p class="artist-bio">Especialista en diseño vectorial y branding. Creando identidades visuales únicas.</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-number">178</div>
+                            <div class="stat-label">Obras</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">2.9K</div>
+                            <div class="stat-label">Seguidores</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">4.6</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                    <div class="artist-actions">
+                        <button class="btn btn-filled btn-small"><i class="fas fa-eye"></i> Ver Perfil</button>
+                        <button class="btn btn-outline btn-small"><i class="fas fa-plus"></i> Seguir</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 6 -->
+            <div class="artist-card">
+                <div class="artist-header">
+                    <div class="artist-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div class="artist-info">
+                    <h3 class="artist-name">Laura Méndez</h3>
+                    <p class="artist-specialty">Digital Painter</p>
+                    <p class="artist-bio">Pintura digital tradicional con enfoque en retratos y escenas narrativas emocionales.</p>
+                    <div class="artist-stats">
+                        <div class="stat">
+                            <div class="stat-number">134</div>
+                            <div class="stat-label">Obras</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">3.4K</div>
+                            <div class="stat-label">Seguidores</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">4.9</div>
+                            <div class="stat-label">Rating</div>
+                        </div>
+                    </div>
+                    <div class="artist-actions">
+                        <button class="btn btn-filled btn-small"><i class="fas fa-eye"></i> Ver Perfil</button>
+                        <button class="btn btn-outline btn-small"><i class="fas fa-plus"></i> Seguir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="page-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">4</button>
+            <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <!-- Featured Artists -->
+    <section class="featured-artists">
+        <h2 class="section-title">Artistas en Tendencia</h2>
+        <div class="featured-grid">
+            <div class="featured-card">
+                <div class="featured-image">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="featured-content">
+                    <span class="featured-badge">Nuevo</span>
+                    <h3>María González</h3>
+                    <p>Artista emergente especializada en arte surrealista digital. Ganadora del concurso "Arte Joven 2024".</p>
+                    <div class="artist-actions" style="justify-content: flex-start; margin-top: 1rem;">
+                        <button class="btn btn-filled btn-small">Seguir</button>
+                    </div>
+                </div>
+            </div>
+            <div class="featured-card">
+                <div class="featured-image">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="featured-content">
+                    <span class="featured-badge">Popular</span>
+                    <h3>Javier López</h3>
+                    <p>Especialista en diseño de personajes para videojuegos. Trabajó en proyectos indie y AAA.</p>
+                    <div class="artist-actions" style="justify-content: flex-start; margin-top: 1rem;">
+                        <button class="btn btn-filled btn-small">Seguir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>IDM Studio Art</h3>
+                <p>La plataforma definitiva para artistas digitales. Donde la creatividad y la tecnología se encuentran.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Explorar</h3>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                    <li><a href="#galeria"><i class="fas fa-chevron-right"></i> Galería</a></li>
+                    <li><a href="artistas.html"><i class="fas fa-chevron-right"></i> Artistas</a></li>
+                    <li><a href="#eventos"><i class="fas fa-chevron-right"></i> Eventos</a></li>
+                    <li><a href="#concursos"><i class="fas fa-chevron-right"></i> Concursos</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Para Artistas</h3>
+                <ul>
+                    <li><a href="#subir"><i class="fas fa-chevron-right"></i> Subir Obra</a></li>
+                    <li><a href="#perfil"><i class="fas fa-chevron-right"></i> Perfil de Artista</a></li>
+                    <li><a href="#estadisticas"><i class="fas fa-chevron-right"></i> Estadísticas</a></li>
+                    <li><a href="#recursos"><i class="fas fa-chevron-right"></i> Recursos</a></li>
+                    <li><a href="#vender"><i class="fas fa-chevron-right"></i> Vender Arte</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Soporte</h3>
+                <ul>
+                    <li><a href="#ayuda"><i class="fas fa-chevron-right"></i> Centro de Ayuda</a></li>
+                    <li><a href="#contacto"><i class="fas fa-chevron-right"></i> Contacto</a></li>
+                    <li><a href="#terminos"><i class="fas fa-chevron-right"></i> Términos de Uso</a></li>
+                    <li><a href="#privacidad"><i class="fas fa-chevron-right"></i> Política de Privacidad</a></li>
+                    <li><a href="#faq"><i class="fas fa-chevron-right"></i> Preguntas Frecuentes</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 IDM Studio Art. Todos los derechos reservados. | Diseñado con <i class="fas fa-heart" style="color: #FDBFD3;"></i> para la comunidad creativa</p>
+        </div>
+    </footer>
+
+    <!-- Modales de Autenticación -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-filled btn-full">Iniciar Sesión</button>
+            </form>
+            <p class="modal-switch">¿No tienes cuenta? <a href="#" onclick="switchToRegister()">Regístrate aquí</a></p>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <h2>Crear Cuenta</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>Nombre completo</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de cuenta</label>
+                    <select id="accountType" required>
+                        <option value="">Selecciona...</option>
+                        <option value="spectator">Espectador</option>
+                        <option value="artist">Artista</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-filled btn-full">Crear Cuenta</button>
+            </form>
+            <p class="modal-switch">¿Ya tienes cuenta? <a href="#" onclick="switchToLogin()">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Interactive functionality para artistas
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.textContent.includes('Seguir')) {
+                    this.innerHTML = '<i class="fas fa-check"></i> Siguiendo';
+                    this.classList.remove('btn-outline');
+                    this.classList.add('btn-filled');
+                } else if (this.textContent.includes('Ver Perfil')) {
+                    alert('Redirigiendo al perfil del artista...');
+                }
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-box input');
+        searchInput.addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value.toLowerCase();
+                alert(`Buscando artistas: ${searchTerm}`);
+            }
+        });
+
+        // Filter functionality
+        document.querySelectorAll('.filter-select').forEach(select => {
+            select.addEventListener('change', function() {
+                alert(`Filtro aplicado: ${this.value}`);
+            });
+        });
+
+        // Pagination
+        document.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (!this.classList.contains('active')) {
+                    document.querySelector('.page-btn.active').classList.remove('active');
+                    this.classList.add('active');
+                    alert(`Cambiando a página ${this.textContent}`);
+                }
+            });
+        });
+
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.artist-card, .featured-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil | Digital Art Gallery</title>
+    <style>
+        :root {
+            --primary-color: #6C63FF;
+            --secondary-color: #4A44C6;
+            --accent-color: #FF6584;
+            --dark-color: #2A2D3E;
+            --light-color: #F8F9FA;
+            --gray-color: #6C757D;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #e9ecef;
+            color: var(--dark-color);
+        }
+        
+        .btn-secondary:hover {
+            background: #dee2e6;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 30px 0;
+        }
+        
+        /* Profile Header */
+        .profile-header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .profile-cover {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            margin-bottom: 80px;
+            position: relative;
+        }
+        
+        .profile-info {
+            display: flex;
+            align-items: flex-end;
+            gap: 25px;
+        }
+        
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            object-fit: cover;
+            margin-top: -75px;
+            background: white;
+        }
+        
+        .profile-details {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 2rem;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .profile-bio {
+            color: var(--gray-color);
+            margin-bottom: 15px;
+            max-width: 600px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Tabs Navigation */
+        .tabs-navigation {
+            background: white;
+            border-radius: 10px;
+            padding: 0 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .tabs-list {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+        
+        .tab-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .tab-item:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Artworks Grid */
+        .artworks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .artwork-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            background: white;
+        }
+        
+        .artwork-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .artwork-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .artwork-card-info {
+            padding: 15px;
+        }
+        
+        .artwork-card-title {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .artwork-card-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--gray-color);
+        }
+        
+        .artwork-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .edit-btn {
+            background: #e7f3ff;
+            color: var(--primary-color);
+        }
+        
+        .edit-btn:hover {
+            background: #d0e7ff;
+        }
+        
+        .delete-btn {
+            background: #ffeaea;
+            color: var(--danger-color);
+        }
+        
+        .delete-btn:hover {
+            background: #ffd6d6;
+        }
+        
+        /* Forms */
+        .form-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-text {
+            font-size: 0.85rem;
+            color: var(--gray-color);
+            margin-top: 5px;
+        }
+        
+        /* Stats Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        
+        .stat-card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+        }
+        
+        .stat-card-1 .stat-card-icon {
+            background: rgba(108, 99, 255, 0.2);
+            color: var(--primary-color);
+        }
+        
+        .stat-card-2 .stat-card-icon {
+            background: rgba(255, 101, 132, 0.2);
+            color: var(--accent-color);
+        }
+        
+        .stat-card-3 .stat-card-icon {
+            background: rgba(40, 167, 69, 0.2);
+            color: var(--success-color);
+        }
+        
+        .stat-card-4 .stat-card-icon {
+            background: rgba(255, 193, 7, 0.2);
+            color: var(--warning-color);
+        }
+        
+        .stat-card-value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .stat-card-label {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .empty-state-text {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 25px;
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-color);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile-info {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .profile-details {
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+            
+            .profile-actions {
+                justify-content: center;
+            }
+            
+            .artworks-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .artworks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-stats {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .tabs-list {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">DigitalArt</a>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="explore.html">Explorar</a></li>
+                    <li><a href="gallery.html">Galería</a></li>
+                    <li><a href="artists.html">Artistas</a></li>
+                </ul>
+                
+                <div class="user-actions">
+                    <a href="dashboard.html" class="btn btn-outline">Mi Dashboard</a>
+                    <a href="index.html" class="btn btn-secondary">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Profile Header -->
+            <section class="profile-header">
+                <div class="profile-cover"></div>
+                <div class="profile-info">
+                    <img id="profile-avatar" src="https://via.placeholder.com/150" alt="Avatar del usuario" class="profile-avatar">
+                    <div class="profile-details">
+                        <h1 class="profile-name" id="profile-name">María González</h1>
+                        <p class="profile-bio" id="profile-bio">Artista digital especializada en pintura abstracta y concept art. Amante de los colores vibrantes y las formas orgánicas.</p>
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <div class="stat-value" id="artworks-count">12</div>
+                                <div class="stat-label">Obras</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="followers-count">1,245</div>
+                                <div class="stat-label">Seguidores</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="following-count">86</div>
+                                <div class="stat-label">Siguiendo</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="total-likes">2,458</div>
+                                <div class="stat-label">Me gusta</div>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="btn btn-primary" id="edit-profile-btn">
+                                <i class="fas fa-edit"></i> Editar Perfil
+                            </button>
+                            <button class="btn btn-outline">
+                                <i class="fas fa-share"></i> Compartir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Tabs Navigation -->
+            <nav class="tabs-navigation">
+                <ul class="tabs-list">
+                    <li class="tab-item active" data-tab="artworks">Mis Obras</li>
+                    <li class="tab-item" data-tab="favorites">Favoritos</li>
+                    <li class="tab-item" data-tab="stats">Estadísticas</li>
+                    <li class="tab-item" data-tab="settings">Configuración</li>
+                </ul>
+            </nav>
+            
+            <!-- Tab Contents -->
+            <div class="tab-content active" id="artworks-tab">
+                <div class="artworks-grid" id="user-artworks">
+                    <!-- Las obras del usuario se cargarán dinámicamente aquí -->
+                </div>
+                
+                <div class="empty-state" id="empty-artworks" style="display: none;">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="empty-state-text">Aún no has publicado ninguna obra</h3>
+                    <a href="dashboard.html" class="btn btn-primary">Crear mi primera obra</a>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="favorites-tab">
+                <div class="artworks-grid" id="favorite-artworks">
+                    <!-- Las obras favoritas se cargarán dinámicamente aquí -->
+                </div>
+                
+                <div class="empty-state" id="empty-favorites" style="display: none;">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="empty-state-text">Aún no tienes obras favoritas</h3>
+                    <a href="explore.html" class="btn btn-primary">Explorar obras</a>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="stats-tab">
+                <div class="stats-cards">
+                    <div class="stat-card stat-card-1">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-card-value" id="total-views">15,678</div>
+                        <div class="stat-card-label">Visualizaciones Totales</div>
+                    </div>
+                    <div class="stat-card stat-card-2">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-card-value" id="total-likes-stats">2,458</div>
+                        <div class="stat-card-label">Me gusta Totales</div>
+                    </div>
+                    <div class="stat-card stat-card-3">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="stat-card-value" id="total-comments">324</div>
+                        <div class="stat-card-label">Comentarios Totales</div>
+                    </div>
+                    <div class="stat-card stat-card-4">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-share"></i>
+                        </div>
+                        <div class="stat-card-value" id="total-shares">189</div>
+                        <div class="stat-card-label">Compartidos</div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">Estadísticas Detalladas</h3>
+                    <div id="stats-chart" style="height: 300px; background: #f8f9fa; border-radius: 5px; display: flex; align-items: center; justify-content: center;">
+                        <p>Gráfico de estadísticas se cargará aquí</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="settings-tab">
+                <div class="form-section">
+                    <h3 class="section-title">Información Personal</h3>
+                    <form id="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first-name" class="form-label">Nombre</label>
+                                <input type="text" id="first-name" class="form-control" value="María">
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name" class="form-label">Apellido</label>
+                                <input type="text" id="last-name" class="form-control" value="González">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="form-label">Nombre de usuario</label>
+                            <input type="text" id="username" class="form-control" value="maria_artista">
+                            <div class="form-text">Este es tu nombre único en la plataforma</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">Correo electrónico</label>
+                            <input type="email" id="email" class="form-control" value="maria@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="bio" class="form-label">Biografía</label>
+                            <textarea id="bio" class="form-control">Artista digital especializada en pintura abstracta y concept art. Amante de los colores vibrantes y las formas orgánicas.</textarea>
+                            <div class="form-text">Cuéntale a la comunidad sobre ti y tu trabajo</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="website" class="form-label">Sitio web</label>
+                            <input type="url" id="website" class="form-control" value="https://maria-artista.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="location" class="form-label">Ubicación</label>
+                            <input type="text" id="location" class="form-control" value="Madrid, España">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </form>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">Cambiar Contraseña</h3>
+                    <form id="password-form">
+                        <div class="form-group">
+                            <label for="current-password" class="form-label">Contraseña actual</label>
+                            <input type="password" id="current-password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password" class="form-label">Nueva contraseña</label>
+                            <input type="password" id="new-password" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password" class="form-label">Confirmar nueva contraseña</label>
+                            <input type="password" id="confirm-password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+                    </form>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title">Preferencias</h3>
+                    <form id="preferences-form">
+                        <div class="form-group">
+                            <label class="form-label">Notificaciones por correo</label>
+                            <div>
+                                <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <input type="checkbox" checked> Comentarios en mis obras
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <input type="checkbox" checked> Nuevos seguidores
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <input type="checkbox"> Mensajes directos
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 10px;">
+                                    <input type="checkbox" checked> Novedades y actualizaciones
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="privacy" class="form-label">Privacidad del perfil</label>
+                            <select id="privacy" class="form-control">
+                                <option value="public">Público</option>
+                                <option value="private">Privado</option>
+                            </select>
+                            <div class="form-text">Los perfiles privados solo pueden ser vistos por seguidores aprobados</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Preferencias</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>DigitalArt</h3>
+                    <p>La plataforma líder para artistas digitales y amantes del arte.</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="explore.html">Explorar</a></li>
+                        <li><a href="gallery.html">Galería</a></li>
+                        <li><a href="artists.html">Artistas</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Recursos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Centro de ayuda</a></li>
+                        <li><a href="#">Términos de servicio</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Conecta</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#"><i class="fab fa-pinterest"></i> Pinterest</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 DigitalArt. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para editar avatar -->
+    <div class="modal" id="avatar-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Cambiar Foto de Perfil</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div style="text-align: center; margin: 20px 0;">
+                <img id="avatar-preview" src="https://via.placeholder.com/150" alt="Vista previa" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 15px;">
+                <input type="file" id="avatar-upload" accept="image/*" style="margin-bottom: 15px;">
+                <div class="form-text">Formatos aceptados: JPG, PNG. Tamaño máximo: 2MB</div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button type="button" class="btn btn-secondary close-modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="save-avatar">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de ejemplo para simular la base de datos
+        const userData = {
+            id: 1,
+            firstName: "María",
+            lastName: "González",
+            username: "maria_artista",
+            email: "maria@ejemplo.com",
+            bio: "Artista digital especializada en pintura abstracta y concept art. Amante de los colores vibrantes y las formas orgánicas.",
+            avatar: "https://via.placeholder.com/150",
+            website: "https://maria-artista.com",
+            location: "Madrid, España",
+            followers: 1245,
+            following: 86,
+            artworksCount: 12,
+            totalLikes: 2458
+        };
+
+        const userArtworks = [
+            {
+                id: 1,
+                title: "Aurora Digital",
+                image: "https://via.placeholder.com/400x300/6C63FF/FFFFFF?text=Aurora+Digital",
+                views: 1568,
+                likes: 245,
+                comments: 36,
+                created_at: "2023-10-15"
+            },
+            {
+                id: 2,
+                title: "Ciudad Futurista",
+                image: "https://via.placeholder.com/400x300/4A44C6/FFFFFF?text=Ciudad+Futurista",
+                views: 1203,
+                likes: 189,
+                comments: 24,
+                created_at: "2023-09-28"
+            },
+            {
+                id: 3,
+                title: "Sueños Cósmicos",
+                image: "https://via.placeholder.com/400x300/FF6584/FFFFFF?text=Sueños+Cósmicos",
+                views: 987,
+                likes: 156,
+                comments: 18,
+                created_at: "2023-09-10"
+            },
+            {
+                id: 4,
+                title: "Reflejos Urbanos",
+                image: "https://via.placeholder.com/400x300/28a745/FFFFFF?text=Reflejos+Urbanos",
+                views: 845,
+                likes: 132,
+                comments: 15,
+                created_at: "2023-08-22"
+            }
+        ];
+
+        const favoriteArtworks = [
+            {
+                id: 5,
+                title: "Olas de Luz",
+                artist: "Carlos López",
+                image: "https://via.placeholder.com/400x300/6C63FF/FFFFFF?text=Olas+de+Luz"
+            },
+            {
+                id: 6,
+                title: "Geometría Emocional",
+                artist: "Ana Martínez",
+                image: "https://via.placeholder.com/400x300/4A44C6/FFFFFF?text=Geometría+Emocional"
+            }
+        ];
+
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            loadUserArtworks();
+            loadFavoriteArtworks();
+            
+            // Configurar event listeners
+            setupEventListeners();
+            setupTabs();
+        });
+
+        // Cargar datos del usuario
+        function loadUserData() {
+            document.getElementById('profile-name').textContent = `${userData.firstName} ${userData.lastName}`;
+            document.getElementById('profile-bio').textContent = userData.bio;
+            document.getElementById('profile-avatar').src = userData.avatar;
+            document.getElementById('artworks-count').textContent = userData.artworksCount;
+            document.getElementById('followers-count').textContent = userData.followers.toLocaleString();
+            document.getElementById('following-count').textContent = userData.following;
+            document.getElementById('total-likes').textContent = userData.totalLikes.toLocaleString();
+            
+            // Cargar datos en el formulario
+            document.getElementById('first-name').value = userData.firstName;
+            document.getElementById('last-name').value = userData.lastName;
+            document.getElementById('username').value = userData.username;
+            document.getElementById('email').value = userData.email;
+            document.getElementById('bio').value = userData.bio;
+            document.getElementById('website').value = userData.website;
+            document.getElementById('location').value = userData.location;
+        }
+
+        // Cargar obras del usuario
+        function loadUserArtworks() {
+            const artworksContainer = document.getElementById('user-artworks');
+            const emptyState = document.getElementById('empty-artworks');
+            
+            if (userArtworks.length === 0) {
+                artworksContainer.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            artworksContainer.innerHTML = '';
+            userArtworks.forEach(artwork => {
+                const artworkElement = document.createElement('div');
+                artworkElement.className = 'artwork-card';
+                artworkElement.innerHTML = `
+                    <a href="obra.detalle.html?id=${artwork.id}">
+                        <img src="${artwork.image}" alt="${artwork.title}">
+                    </a>
+                    <div class="artwork-card-info">
+                        <h4 class="artwork-card-title">${artwork.title}</h4>
+                        <div class="artwork-card-stats">
+                            <span><i class="fas fa-eye"></i> ${artwork.views}</span>
+                            <span><i class="fas fa-heart"></i> ${artwork.likes}</span>
+                            <span><i class="fas fa-comment"></i> ${artwork.comments}</span>
+                        </div>
+                        <div class="artwork-actions">
+                            <button class="action-btn edit-btn" data-id="${artwork.id}">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="action-btn delete-btn" data-id="${artwork.id}">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    </

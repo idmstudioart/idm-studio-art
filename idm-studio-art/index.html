@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDM Studio Art - Plataforma para Artistas Digitales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --color-primary: #FDEEF5;
+            --color-secondary: #FFCFE2;
+            --color-accent: #FDBFD3;
+            --color-light: #E9EDF6;
+            --color-dark: #FDC9DA;
+            --color-text: #444;
+            --color-text-light: #666;
+        }
+
+        body {
+            background-color: var(--color-primary);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(253, 191, 211, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: #FDBFD3;
+            font-size: 2rem;
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, #FDBFD3, #FFCFE2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #FDBFD3;
+        }
+
+        .nav-links a.active {
+            color: #FDBFD3;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #FDBFD3;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 0.95rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #FDBFD3;
+            color: #FDBFD3;
+        }
+
+        .btn-filled {
+            background: #FDBFD3;
+            color: white;
+        }
+
+        .btn-large {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(253, 191, 211, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            min-height: 80vh;
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            color: var(--color-text-light);
+            margin-bottom: 2rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            position: relative;
+        }
+
+        .floating-art {
+            position: relative;
+            height: 400px;
+        }
+
+        .floating-art i {
+            position: absolute;
+            font-size: 4rem;
+            color: var(--color-accent);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-art i:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-art i:nth-child(2) { top: 60%; left: 70%; animation-delay: 1s; }
+        .floating-art i:nth-child(3) { top: 30%; left: 60%; animation-delay: 2s; }
+        .floating-art i:nth-child(4) { top: 70%; left: 20%; animation-delay: 1.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #444;
+            font-size: 2.4rem;
+            font-weight: 600;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #FDBFD3, #FFCFE2);
+            margin: 0.8rem auto;
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--color-primary);
+            border-radius: 18px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .feature-card p {
+            color: var(--color-text-light);
+        }
+
+        /* Art Grid */
+        .art-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .art-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            border: 1px solid rgba(253, 191, 211, 0.2);
+        }
+
+        .art-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .art-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--color-light) 0%, var(--color-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .art-info {
+            padding: 1.5rem;
+        }
+
+        .art-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .artist-name {
+            color: var(--color-accent);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .art-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Categories */
+        .categories {
+            padding: 5rem 5%;
+            background-color: var(--color-light);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            background-color: var(--color-secondary);
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #FDBFD3;
+        }
+
+        /* How it works */
+        .how-it-works {
+            padding: 5rem 5%;
+            background-color: white;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 2rem;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 5%;
+            background-color: var(--color-primary);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-light) 0%, var(--color-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+            text-align: center;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--color-accent);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            color: white;
+            padding: 5rem 5% 2.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 3.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.8rem;
+            font-size: 1.3rem;
+            color: #FDBFD3;
+        }
+
+        .footer-column p {
+            color: #ccc;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-column a i {
+            width: 20px;
+        }
+
+        .footer-column a:hover {
+            color: var(--color-secondary);
+            transform: translateX(5px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.8rem;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: #444;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        /* Modales */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 18px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-text-light);
+        }
+
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--color-text);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--color-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .modal-switch {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--color-text-light);
+        }
+
+        .modal-switch a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Mensajes */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        .message.error {
+            background: #f44336;
+        }
+
+        .message button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 1.2rem 5%;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                margin-bottom: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .steps {
+                flex-direction: column;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <i class="fas fa-palette"></i>
+                <span class="logo-text">IDM Studio Art</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="active"><i class="fas fa-home"></i> Inicio</a>
+                <a href="#galeria"><i class="fas fa-compass"></i> Explorar</a>
+                <a href="artistas.html"><i class="fas fa-users"></i> Artistas</a>
+                <a href="espectador.html"><i class="fas fa-user"></i> Mi Espacio</a>
+            </div>
+            <div class="auth-buttons">
+                <!-- Se llena automáticamente con auth.js -->
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Donde la Creatividad Encuentra su Hogar</h1>
+            <p>Descubre, crea y comparte arte digital en nuestra comunidad global de artistas</p>
+            <div class="hero-buttons">
+                <button class="btn btn-filled btn-large" onclick="openRegisterModal()">Comenzar Ahora</button>
+                <button class="btn btn-outline btn-large">Explorar Galería</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="floating-art">
+                <i class="fas fa-paint-brush"></i>
+                <i class="fas fa-palette"></i>
+                <i class="fas fa-draw-polygon"></i>
+                <i class="fas fa-cube"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Obras Destacadas</h2>
+            <div class="art-grid">
+                <div class="art-card">
+                    <div class="art-image">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <div class="art-info">
+                        <h3 class="art-title">Dragón Ancestral</h3>
+                        <p class="artist-name">Por Carlos Mendoza</p>
+                        <div class="art-stats">
+                            <span><i class="fas fa-heart"></i> 245</span>
+                            <span><i class="fas fa-comment"></i> 32</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="art-card">
+                    <div class="art-image">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <div class="art-info">
+                        <h3 class="art-title">Ciudad Futurista</h3>
+                        <p class="artist-name">Por Sofia Chen</p>
+                        <div class="art-stats">
+                            <span><i class="fas fa-heart"></i> 189</span>
+                            <span><i class="fas fa-comment"></i> 24</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="art-card">
+                    <div class="art-image">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <div class="art-info">
+                        <h3 class="art-title">Bosque Encantado</h3>
+                        <p class="artist-name">Por Elena Rodríguez</p>
+                        <div class="art-stats">
+                            <span><i class="fas fa-heart"></i> 312</span>
+                            <span><i class="fas fa-comment"></i> 41</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="art-card">
+                    <div class="art-image">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="art-info">
+                        <h3 class="art-title">Océano de Sueños</h3>
+                        <p class="artist-name">Por Laura Méndez</p>
+                        <div class="art-stats">
+                            <span><i class="fas fa-heart"></i> 176</span>
+                            <span><i class="fas fa-comment"></i> 19</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">¿Por qué unirte a IDM Studio Art?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Comunidad Activa</h3>
+                <p>Conecta con miles de artistas digitales y comparte tus creaciones</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Crece como Artista</h3>
+                <p>Recibe feedback constructivo y mejora tus habilidades</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h3>Descubre Talento</h3>
+                <p>Encuentra artistas increíbles y obras que te inspirarán</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <h2 class="section-title">Categorías Populares</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-paint-brush"></i>
+                </div>
+                <h3>Ilustración Digital</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <h3>Fotografía</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-pencil-alt"></i>
+                </div>
+                <h3>Dibujo Digital</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <h3>Arte 3D</h3>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3>Concept Art</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works">
+        <h2 class="section-title">¿Cómo Funciona?</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Regístrate</h3>
+                <p>Crea tu cuenta como artista o espectador en menos de 2 minutos.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Personaliza</h3>
+                <p>Configura tu perfil y muestra tu estilo único como artista.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Comparte</h3>
+                <p>Publica tus obras, organiza colecciones y conecta con otros.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <h2 class="section-title">Lo Que Dicen Nuestros Usuarios</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"IDM Studio Art me ha permitido conectar con otros artistas y recibir feedback valioso para mejorar mi trabajo."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h4>Elena Rodríguez</h4>
+                        <p>Ilustradora Digital</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Como amante del arte, esta plataforma me permite descubrir talento increíble y apoyar a artistas emergentes."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h4>Carlos Mendoza</h4>
+                        <p>Coleccionista</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"La interfaz es intuitiva y las herramientas para artistas son excelentes. ¡Mi crecimiento ha sido exponencial!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <h4>Sofia Chen</h4>
+                        <p>Artista Conceptual</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2>Únete a Nuestra Comunidad Creativa</h2>
+        <p>Miles de artistas ya están compartiendo sus obras y conectando con amantes del arte en todo el mundo.</p>
+        <button class="btn btn-large" onclick="openRegisterModal()">Crear Cuenta Gratis</button>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>IDM Studio Art</h3>
+                <p>La plataforma definitiva para artistas digitales. Donde la creatividad y la tecnología se encuentran.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Explorar</h3>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                    <li><a href="#galeria"><i class="fas fa-chevron-right"></i> Galería</a></li>
+                    <li><a href="artistas.html"><i class="fas fa-chevron-right"></i> Artistas</a></li>
+                    <li><a href="#eventos"><i class="fas fa-chevron-right"></i> Eventos</a></li>
+                    <li><a href="#concursos"><i class="fas fa-chevron-right"></i> Concursos</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Para Artistas</h3>
+                <ul>
+                    <li><a href="#subir"><i class="fas fa-chevron-right"></i> Subir Obra</a></li>
+                    <li><a href="#perfil"><i class="fas fa-chevron-right"></i> Perfil de Artista</a></li>
+                    <li><a href="#estadisticas"><i class="fas fa-chevron-right"></i> Estadísticas</a></li>
+                    <li><a href="#recursos"><i class="fas fa-chevron-right"></i> Recursos</a></li>
+                    <li><a href="#vender"><i class="fas fa-chevron-right"></i> Vender Arte</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Soporte</h3>
+                <ul>
+                    <li><a href="#ayuda"><i class="fas fa-chevron-right"></i> Centro de Ayuda</a></li>
+                    <li><a href="#contacto"><i class="fas fa-chevron-right"></i> Contacto</a></li>
+                    <li><a href="#terminos"><i class="fas fa-chevron-right"></i> Términos de Uso</a></li>
+                    <li><a href="#privacidad"><i class="fas fa-chevron-right"></i> Política de Privacidad</a></li>
+                    <li><a href="#faq"><i class="fas fa-chevron-right"></i> Preguntas Frecuentes</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 IDM Studio Art. Todos los derechos reservados. | Diseñado con <i class="fas fa-heart" style="color: #FDBFD3;"></i> para la comunidad creativa</p>
+        </div>
+    </footer>
+
+    <!-- Modales de Autenticación -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2>Iniciar Sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-filled btn-full">Iniciar Sesión</button>
+            </form>
+            <p class="modal-switch">¿No tienes cuenta? <a href="#" onclick="switchToRegister()">Regístrate aquí</a></p>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeRegisterModal()">&times;</span>
+            <h2>Crear Cuenta</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label>Nombre completo</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label>Tipo de cuenta</label>
+                    <select id="accountType" required>
+                        <option value="">Selecciona...</option>
+                        <option value="spectator">Espectador</option>
+                        <option value="artist">Artista</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-filled btn-full">Crear Cuenta</button>
+            </form>
+            <p class="modal-switch">¿Ya tienes cuenta? <a href="#" onclick="switchToLogin()">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
